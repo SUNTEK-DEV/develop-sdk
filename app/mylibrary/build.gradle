@@ -49,7 +49,7 @@ afterEvaluate {
                 from components.release // 指定发布 release 构建变体
 
                 // 定义你的库的坐标信息 (GAV)
-                groupId = 'com.github.SUNTEK-CLOUD' // 替换为你的 GitHub 用户名
+                groupId = 'suntek.cloud' // 替换为你的 GitHub 用户名
                 artifactId = project.name // 通常是模块名，也可自定义
                 version = android.defaultConfig.versionName
             }
