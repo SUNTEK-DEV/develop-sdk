@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.suntek.mylibrary'
+    namespace 'com.suntek.sdk3576'
     compileSdk 36
 
     defaultConfig {
@@ -41,17 +41,17 @@ dependencies {
     androidTestImplementation libs.espresso.core
 }
 
-// 配置发布信息
+// 重点：配置发布任务
 afterEvaluate {
     publishing {
         publications {
-            release(MavenPublication) {
-                from components.release // 指定发布 release 构建变体
-
-                // 定义你的库的坐标信息 (GAV)
-                groupId = 'suntek.cloud' // 替换为你的 GitHub 用户名
-                artifactId = project.name // 通常是模块名，也可自定义
-                version = android.defaultConfig.versionName
+            aar(MavenPublication) {
+                // 指定要发布的aar文件的具体路径
+                artifact file('src/main/aar/SdkApiJar_V1.250217.0851.aar')
+                // 定义坐标信息，这决定了别人引用的方式
+                groupId = 'com.github.SUNTEK-DEV' // 替换为你的GitHub用户名
+                artifactId = 'sdk3576' // 自定义一个标识符，如库名
+                version = '1.0.0' // 自定义版本号
             }
         }
     }
