@@ -1,0 +1,58 @@
+plugins {
+    alias(libs.plugins.android.library)
+    id 'maven-publish' // 关键：用于发布
+}
+
+android {
+    namespace 'com.suntek.mylibrary'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 30
+        versionName "1.0.0" // 定义你的库版本
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+
+    }
+    // 以下配置对于新版本 Android Studio 和 Gradle 可能很重要
+    publishing {
+        singleVariant("release")
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
+
+// 配置发布信息
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release // 指定发布 release 构建变体
+
+                // 定义你的库的坐标信息 (GAV)
+                groupId = 'com.github.SUNTEK-CLOUD' // 替换为你的 GitHub 用户名
+                artifactId = project.name // 通常是模块名，也可自定义
+                version = android.defaultConfig.versionName
+            }
+        }
+    }
+}
